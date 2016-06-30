@@ -1,4 +1,5 @@
-function handleProgram(){
+function handleProgram(args){
+    this.arguments = processArgs(args);
     this.commands = {};
     this.args = [];
     
@@ -16,4 +17,16 @@ handleProgram.prototype.call = function(functionName){
 
     }
 }
+
+function processArgs(args){
+    //this program takes up to three arguments, all optional parameters in coding perspective.
+    //var arg1 = || arg1;
+    console.log(args);
+    var arguments = process.argv.slice(2,args.length);
+    var length = arguments.length;
+    //how many arguments does this program want to handle?
+    console.log(arguments);
+    return arguments;
+}
+
 module.exports = new handleProgram;

@@ -8,7 +8,21 @@ var esprima = require("esprima");
 var estraverse = require("estraverse");
 //we can use extraverse to traverse the ast, but we choose not to here.
 
-processArgs();
+//yet to become an nodejs package.
+//
+//refer to registry: ... 
+var program = require('./handleProgram');
+console.log(process.argv);
+var startProgram = program(process.argv);
+
+var utils = require('./utils');
+var content = 'bla';
+var utility = new utils();
+utility.logger('log it...');
+utility.export('test.txt',content);
+
+startProgram.addCommand('demo',runSimpleExample);
+
 if (process.argv[2]=='demo'){
     runSimpleExample();
     //start with simple example
@@ -37,14 +51,17 @@ function runSimpleExample() {
  * @param {string} comment
  * @return {bool}
  */
-function parseComment(comment){
+function parseComment(comments){
     params = [];
-    data = doctrine.parse(comment,{unwrap:true});
-    data.tags.forEach(function(tag){
-        if(tag.title == 'param'){
-            params.push(tag.name);
-        }
+    comment.forEach(function(comment){
+        var data = doctrine.parse(comment,{unwrap:true});
+        data.tags.forEach(function(tag){
+            if(tag.title == 'param'){
+                params.push(tag.name);
+            }
+        });
     });
+    
 }
 
 //we need to feed the doc parser all the docs of the module, achieved by esprima's 
@@ -63,16 +80,5 @@ function esprimaWrapper(code){
  * @param {function} func
  */
 function traverse(node,func){
-
-}
-
-function processArgs(){
-    //this program takes up to three arguments, all optional parameters in coding perspective.
-    //var arg1 = || arg1;
-    var args = process.argv.slice(2,process.argv.length);
-    var length = args.length;
-    //how many arguments does this program want to handle?
-
-    console.log(args);
 
 }
